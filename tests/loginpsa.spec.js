@@ -13,6 +13,6 @@ test('Login', async ({ page }) => {
   await page.getByPlaceholder('Senha').fill(password);
   await page.getByRole('button', { name: 'Entrar' }).click();
   await page.getByRole('button', { name: 'Sim' }).click();
-  await page.waitForTimeout(2000);
+  await page.waitForTimeout(2000)
 
 });

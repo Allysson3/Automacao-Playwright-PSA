@@ -20,7 +20,7 @@ test('ProjetoNaoFaturavel', async ({ page }) => {
   await page.getByLabel('Serviços (alterar área)').click();
   await page.getByText('Serviços de Projeto').click();
 
-  // Seleviona Criar um novo contrato do projeto e preenche todos os dados necessários para um projeto não faturável
+  // Entra em Contratos do Projeto e seleciona Criar um novo contrato do projeto e preenche todos os dados necessários para um projeto não faturável
   await page.getByText('Contratos do Projeto').click();
   await page.getByLabel('Criar', { exact: true }).click();
   await page.getByLabel('Nome').click();
