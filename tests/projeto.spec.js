@@ -6,7 +6,7 @@ const url = process.env.URL;
 const userName = process.env.USER;
 const password = process.env.PASSWORD;
 
-test('test', async ({ page }) => {
+test('Criar Projeto', async ({ page }) => {
 
   // Loga no ambiente HML Principal do PSA
   await page.goto(url);
@@ -57,7 +57,8 @@ test('test', async ({ page }) => {
   // Entra na aba de projetos de adiciona um novo projeto ao contrato
   await page.getByLabel('Projeto(s)').click();
   await page.getByLabel('Adicionar Nova Linha de Contrato. Adicionar uma linha de contrato relacionada a este registro.').click();
-  await page.getByLabel('Projeto, Pesquisa', { exact: true }).click();
+  await page.waitForTimeout(4000);
+  await page.getByLabel('Pesquisar registros para o campo Projeto, Pesquisa').click();
   await page.getByLabel('Novo Projeto').click();
   await page.getByRole('textbox', { name: 'Nome' }).click();
   await page.getByRole('textbox', { name: 'Nome' }).fill('Projeto Teste ' + RandomNumber);
@@ -70,5 +71,6 @@ test('test', async ({ page }) => {
   await page.getByLabel('Custo de Horas Orçado').click();
   await page.getByLabel('Custo de Horas Orçado', { exact: true }).fill('8181,82');
   await page.getByLabel('Salvar e Fechar').click();
+  await expect(page.getByLabel('Linhas de Contrato do Projeto')).toBeVisible({timeout: 50000});
   
 });
