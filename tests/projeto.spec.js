@@ -57,7 +57,8 @@ test('Criar Projeto', async ({ page }) => {
   // Entra na aba de projetos de adiciona um novo projeto ao contrato
   await page.getByLabel('Projeto(s)').click();
   await page.getByLabel('Adicionar Nova Linha de Contrato. Adicionar uma linha de contrato relacionada a este registro.').click();
-  await page.waitForTimeout(4000);
+  await page.waitForTimeout(5000);
+  await expect(page.getByLabel('Pesquisar registros para o campo Projeto, Pesquisa')).toBeVisible();
   await page.getByLabel('Pesquisar registros para o campo Projeto, Pesquisa').click();
   await page.getByLabel('Novo Projeto').click();
   await page.getByRole('textbox', { name: 'Nome' }).click();
@@ -71,6 +72,6 @@ test('Criar Projeto', async ({ page }) => {
   await page.getByLabel('Custo de Horas Orçado').click();
   await page.getByLabel('Custo de Horas Orçado', { exact: true }).fill('8181,82');
   await page.getByLabel('Salvar e Fechar').click();
-  await expect(page.getByLabel('Linhas de Contrato do Projeto')).toBeVisible({timeout: 50000});
+  await expect(page.getByLabel('Linhas de Contrato do Projeto')).toBeVisible({timeout: 80000});
   
 });
