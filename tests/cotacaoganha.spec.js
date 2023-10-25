@@ -30,7 +30,6 @@ test('Cotacao Ganha', async ({ page }) => {
   await page.getByLabel('Filter by value').click();
   await page.getByLabel('Filter by value').fill('Automacao');
   await page.getByRole('button', { name: 'Aplicar' }).click();
-  await page.getByLabel('Editar filtros').click();
   
   // Filtra pelo status Aguardando Análise seleciona e clica em Editar, depois em Fechar como Ganha
   await page.getByText('Razão do Status').click();
@@ -45,11 +44,11 @@ test('Cotacao Ganha', async ({ page }) => {
   await page.getByLabel('Editar', { exact: true }).click();
   await page.waitForTimeout(3000);
   await page.getByLabel('Fechar como Ganha').click();
-  await page.getByLabel('OK').click();
+  await page.getByLabel('OK', { exact: true}).click();
 
   // Scroll
-  await page.waitForTimeout(17000);
-  await page.mouse.wheel(0, 700);
+  await page.waitForTimeout(20000);
+  await page.mouse.wheel(0, 800);
 
   // Preenche o restante dos campos, confirma o contrato e salva novamente
   await page.getByLabel('Modalidade de Projeto').selectOption('0');
@@ -60,6 +59,6 @@ test('Cotacao Ganha', async ({ page }) => {
   await page.getByLabel('Salvar (CTRL+S)').click();
   await page.getByLabel('Mais comandos para Ordem').click();
   await page.getByLabel('Confirmar').click();
-  await page.getByLabel('OK').click();
+  await page.getByLabel('OK', { exact: true}).click();
   await page.getByLabel('Salvar e continuar').click();
 });

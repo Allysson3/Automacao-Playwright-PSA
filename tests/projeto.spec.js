@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { timeout } from '../playwright.config';
 const { faker } = require('@faker-js/faker');
 
 const RandomNumber = faker.number.int({ min: 10000, max: 199999});
@@ -57,10 +58,13 @@ test('Criar Projeto', async ({ page }) => {
   // Entra na aba de projetos de adiciona um novo projeto ao contrato
   await page.getByLabel('Projeto(s)').click();
   await page.getByLabel('Adicionar Nova Linha de Contrato. Adicionar uma linha de contrato relacionada a este registro.').click();
-  await page.waitForTimeout(5000);
-  await expect(page.getByLabel('Pesquisar registros para o campo Projeto, Pesquisa')).toBeVisible();
+  await page.waitForTimeout(6000);
+  await page.getByLabel('Projeto, Pesquisa', { exact: true }).click();
   await page.getByLabel('Pesquisar registros para o campo Projeto, Pesquisa').click();
+  await page.waitForTimeout(2000);
   await page.getByLabel('Novo Projeto').click();
+  await page.waitForTimeout(5000);
+  await expect(page.getByRole('textbox', { name: 'Nome' })).toBeVisible();
   await page.getByRole('textbox', { name: 'Nome' }).click();
   await page.getByRole('textbox', { name: 'Nome' }).fill('Projeto Teste ' + RandomNumber);
   await page.getByLabel('Modelo de horas de Trabalho, Pesquisa', { exact: true }).click();
@@ -72,6 +76,22 @@ test('Criar Projeto', async ({ page }) => {
   await page.getByLabel('Custo de Horas Orçado').click();
   await page.getByLabel('Custo de Horas Orçado', { exact: true }).fill('8181,82');
   await page.getByLabel('Salvar e Fechar').click();
-  await expect(page.getByLabel('Linhas de Contrato do Projeto')).toBeVisible({timeout: 80000});
+  
+  // Entra novamente no projeto criado preenche os campos obrigatórios que faltam e salva
+  await expect(page.getByLabel('Linhas de Contrato do Projeto')).toBeVisible({timeout: 180000});
+  await page.getByText('Projetos', { exact: true }).click();
+  await page.getByTitle('Data de Emissão do Projeto').nth(1).click();
+  await page.getByLabel('Classificar do Mais Recente para o Mais Antigo').click();
+  await page.getByLabel('Atualizar').click();
+  await page.getByRole('gridcell', { name: 'Selecionar linha 2' }).click();
+  await page.getByLabel('Editar', { exact: true }).click();
+  await page.waitForTimeout(10000);
+  await page.getByLabel('Contato, Pesquisa', { exact: true }).click();
+  await page.getByLabel('Contato, Pesquisa', { exact: true }).fill('Teste novo Teste');
+  await page.getByLabel('Teste novo Teste Teste novo Teste, testenovoteste@totvs.com.br').click();
+  await page.getByLabel('Local de Atendimento Padrão, Pesquisa', { exact: true }).click();
+  await page.getByPlaceholder('Procurar Local de Atendimento Padrão').fill('999');
+  await page.getByLabel('999 - Atendimento Interno, Atendimento Interno').click();
+  await page.getByLabel('Salvar e Fechar').click();
   
 });

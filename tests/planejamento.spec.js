@@ -10,7 +10,7 @@ test('Planejamento', async ({ page }) => {
   // Loga no ambiente HML Principal do PSA
   await page.goto(url);
   await page.locator('#i0116').click();
-  await page.locator().fill(userName);
+  await page.locator('#i0116').fill(userName);
   await page.getByRole('button', { name: 'Avançar' }).click();
   await page.locator('#i0118').click();
   await page.locator('#i0118').fill(password);
@@ -20,7 +20,7 @@ test('Planejamento', async ({ page }) => {
   await page.getByLabel('Serviços (alterar área)').click();
   await page.getByText('Serviços de Projeto').click();
   await page.getByText('Projetos', { exact: true }).click();
-  await page.getByText('Nome').click();
+  await page.getByText('Nome').nth(1).click();
   await page.getByLabel('Filtrar por', { exact: true }).click();
   await page.locator('span').filter({ hasText: /^Igual a$/ }).click();
   await page.getByRole('option', { name: 'Começa com', exact: true }).click();
@@ -35,4 +35,7 @@ test('Planejamento', async ({ page }) => {
   await page.getByLabel('Filter by value').fill('Rascunho');
   await page.getByRole('button', { name: 'Aplicar' }).click();
   await page.getByRole('gridcell', { name: 'Selecionar linha 2' }).click();
+  await page.getByLabel('Editar', { exact: true }).click();
+
+  
 });
