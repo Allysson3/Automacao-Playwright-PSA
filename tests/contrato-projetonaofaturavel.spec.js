@@ -1,10 +1,13 @@
 import { test, expect } from '@playwright/test';
+const { faker } = require('@faker-js/faker');
 
 const url = process.env.URL;
 const userName = process.env.USER;
 const password = process.env.PASSWORD;
+const nAleatorio = faker.number.int({ min: 10000, max: 199999});
 
-test('ProjetoNaoFaturavel', async ({ page }) => {
+
+test('Contrato / ProjetoNaoFaturavel', async ({ page }) => {
   
   // Loga no ambiente HML Principal do PSA
   await page.goto(url);
@@ -33,7 +36,7 @@ test('ProjetoNaoFaturavel', async ({ page }) => {
   await page.getByText('TEXHMP00TEXHMP00').click();
   await page.getByRole('button', { name: 'Concluído' }).click();
   
-  await page.mouse.wheel(0, 600);
+  await page.mouse.wheel(0, 700);
   
   await page.getByLabel('Tipo de Projeto', { exact: true }).selectOption('961600001');
   await page.getByRole('textbox', { name: 'Valor Total Líquido' }).click();
@@ -45,18 +48,18 @@ test('ProjetoNaoFaturavel', async ({ page }) => {
   await page.getByPlaceholder('Procurar Empresa Filial').fill('Totvs Brasil / Totvs Matriz');
   await page.getByLabel('TOTVS BRASIL / TOTVS MATRIZ, 0000001000100').click();
   await page.getByLabel('Salvar (CTRL+S)').click();
-  await page.getByLabel('Salvar (CTRL+S)').click();
+  await page.waitForTimeout(5000);
 
   // Após salvar o contrato criado volta no menu de Contratos do Projeto, seleciona o ultimo criado e entra nele novamente
   await page.getByText('Contratos do Projeto').click();
-  await page.getByText('Data de Emissão do Contrato').nth(1).click();
+  await page.getByTitle('Data de Emissão do Contrato').nth(1).click();
   await page.getByText('Classificar do Mais Recente para o Mais Antigo').click();
   await page.getByText('Automacao Contrato NF', 'Rascunho').first().click();
   
   // Confirmar contrato
   await page.getByLabel('Mais comandos para Ordem').click();
   await page.getByLabel('Confirmar').click();
-  await page.getByLabel('OK').click();
+  await page.getByLabel('OK', { exact: true }).click();
   await page.getByLabel('Salvar e continuar').click();
   
   // Entra na aba de projetos para criarmos um novo
@@ -68,7 +71,7 @@ test('ProjetoNaoFaturavel', async ({ page }) => {
   await page.getByPlaceholder('Procurar Modelo de Calendário de Trabalho').fill('Modelo de Trabalho Padrao');
   await page.getByLabel('Modelo de Trabalho Padrão, 29/09/2017 15:32').click();
   await page.getByRole('textbox', { name: 'Nome' }).click();
-  await page.getByRole('textbox', { name: 'Nome' }).fill('Automacao Projeto NF');
+  await page.getByRole('textbox', { name: 'Nome' }).fill('Projeto NF ' + nAleatorio);
   await page.getByRole('button', { name: 'Salvar e Fechar', exact: true }).click();
   await page.getByLabel('Custo de Despesa Orçada').click();
   await page.getByLabel('Custo de Despesa Orçada').fill('0');
@@ -77,6 +80,5 @@ test('ProjetoNaoFaturavel', async ({ page }) => {
   await page.getByLabel('Custo de Horas Orçado', { exact: true }).press('Enter');
   await page.getByLabel('Salvar e Fechar').click();
   
-  // Após criar e salvar o projeto no contrato volta ao menu de contratos do projeto
-  await page.getByText('Contratos do Projeto').click();
+  await expect(page.getByLabel('Linhas de Contrato do Projeto')).toBeVisible({timeout: 180000});
 });

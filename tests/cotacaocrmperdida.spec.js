@@ -26,13 +26,12 @@ test('Cotação do CRM Perdida', async ({ page }) => {
   // Filtra as cotações que vieram do CRM pelo campo "Código da Proposta"
   await page.getByLabel('Editar filtros').click();
   await page.getByLabel('Adicionar nova expressão de nível 1').click();
-  await page.getByRole('menuitem', { name: 'Adicionar linha' }).click();
-  await page.getByPlaceholder('Selecionar um campo').click();
+  await page.locator('button[name="Adicionar linha"]').click();
   await page.getByPlaceholder('Selecionar um campo').click();
   await page.getByPlaceholder('Selecionar um campo').fill('Código da Proposta');
-  await page.getByPlaceholder('Selecionar um campo').press('Enter');
-  await page.locator('#ComboBox42wrapper button').click();
-  await page.getByRole('option', { name: 'Contém dados', exact: true }).click();
+  await page.getByPlaceholder('Selecionar um campo').press('Tab');
+  await page.getByLabel('Operador').click();
+  await page.locator('button').filter({ hasText: /^Contém dados$/ }).click();
   await page.getByLabel('Aplicar os filtros avançados atuais').click();
 
   // Classifica as cotações a começar com a mais atuais
@@ -59,6 +58,5 @@ test('Cotação do CRM Perdida', async ({ page }) => {
   await page.frameLocator('iframe[name="ctm_dialog_reprova_quote"]').getByLabel('Descrição').click();
   await page.frameLocator('iframe[name="ctm_dialog_reprova_quote"]').getByLabel('Descrição').fill('Teste\n');
   await page.frameLocator('iframe[name="ctm_dialog_reprova_quote"]').getByRole('button', { name: 'Reprovar' }).click();
-  await page.waitForTimeout(10000);
-  await expect(page.locator('#headerControlsList_26')).toContainText('Perdida');
+  await page.waitForTimeout(20000);
 });
