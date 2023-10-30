@@ -8,12 +8,14 @@ test('Cotação do CRM Perdida', async ({ page }) => {
 
   // Loga no ambiente HML Principal do PSA
   await page.goto(url);
-  await page.getByPlaceholder('Email, telefone ou Skype').click();
-  await page.getByPlaceholder('Email, telefone ou Skype').fill(userName);
+  await page.locator('#i0116').click();
+  await page.locator('#i0116').fill(userName);
   await page.getByRole('button', { name: 'Avançar' }).click();
-  await page.getByPlaceholder('Senha').click();
-  await page.getByPlaceholder('Senha').fill(password);
+  await page.locator('#i0118').click();
+  await page.locator('#i0118').fill(password);
   await page.getByRole('button', { name: 'Entrar' }).click();
+  await page.getByRole('button', { name: 'Avançar' }).click();
+  await page.getByRole('link', { name: 'Pular a configuração' }).click();
   await page.getByRole('button', { name: 'Sim' }).click();
 
   // Entra no menu de Serviços do Projeto

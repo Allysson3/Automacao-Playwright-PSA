@@ -15,6 +15,8 @@ test('Planejamento', async ({ page }) => {
   await page.locator('#i0118').click();
   await page.locator('#i0118').fill(password);
   await page.getByRole('button', { name: 'Entrar' }).click();
+  await page.getByRole('button', { name: 'Avançar' }).click();
+  await page.getByRole('link', { name: 'Pular a configuração' }).click();
   await page.getByRole('button', { name: 'Sim' }).click();
   
   await page.getByLabel('Serviços (alterar área)').click();
