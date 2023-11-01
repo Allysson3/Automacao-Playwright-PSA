@@ -38,7 +38,7 @@ test('Contrato / ProjetoNaoFaturavel', async ({ page }) => {
   await page.getByText('TEXHMP00TEXHMP00').click();
   await page.getByRole('button', { name: 'Concluído' }).click();
   
-  await page.mouse.wheel(0, 700);
+  await page.mouse.wheel(0, 800);
   
   await page.getByLabel('Tipo de Projeto', { exact: true }).selectOption('961600001');
   await page.getByRole('textbox', { name: 'Valor Total Líquido' }).click();
