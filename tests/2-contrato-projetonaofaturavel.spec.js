@@ -38,7 +38,7 @@ test('Contrato / ProjetoNaoFaturavel', async ({ page }) => {
   await page.getByText('TEXHMP00TEXHMP00').click();
   await page.getByRole('button', { name: 'Concluído' }).click();
   
-  await page.mouse.wheel(0, 800);
+  await page.mouse.wheel(0, 900);
   
   await page.getByLabel('Tipo de Projeto', { exact: true }).selectOption('961600001');
   await page.getByRole('textbox', { name: 'Valor Total Líquido' }).click();
@@ -56,6 +56,7 @@ test('Contrato / ProjetoNaoFaturavel', async ({ page }) => {
   await page.getByText('Contratos do Projeto').click();
   await page.getByTitle('Data de Emissão do Contrato').nth(1).click();
   await page.getByText('Classificar do Mais Recente para o Mais Antigo').click();
+  await page.getByLabel('Atualizar').click();
   await page.getByText('Automacao Contrato NF', 'Rascunho').first().click();
   
   // Confirmar contrato
@@ -64,7 +65,7 @@ test('Contrato / ProjetoNaoFaturavel', async ({ page }) => {
   await page.getByLabel('OK', { exact: true }).click();
   await page.getByLabel('Salvar e continuar').click();
   
-  // Entra na aba de projetos para criarmos um novo
+  // Entra na aba de projetos para criarmos um novo projeto
   await page.getByLabel('Projeto(s)').click();
   await page.getByLabel('Adicionar Nova Linha de Contrato. Adicionar uma linha de contrato relacionada a este registro.').click();
   await page.getByLabel('Pesquisar registros para o campo Projeto, Pesquisa').click();

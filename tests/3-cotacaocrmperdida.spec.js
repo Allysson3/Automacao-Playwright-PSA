@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { timeout } from '../playwright.config';
 
 const url = process.env.URL;
 const userName = process.env.USER;
@@ -27,12 +28,13 @@ test('Cotação do CRM Perdida', async ({ page }) => {
 
   // Filtra as cotações que vieram do CRM pelo campo "Código da Proposta"
   await page.getByLabel('Editar filtros').click();
+  await expect(page.getByLabel('Adicionar nova expressão de nível 1')).toBeVisible({timeout: 15000});
   await page.getByLabel('Adicionar nova expressão de nível 1').click();
   await page.locator('button[name="Adicionar linha"]').click();
   await page.getByPlaceholder('Selecionar um campo').click();
   await page.getByPlaceholder('Selecionar um campo').fill('Código da Proposta');
   await page.getByPlaceholder('Selecionar um campo').press('Tab');
-  await page.getByLabel('Operador').click();
+  await page.getByRole('combobox', { name: 'Operador' }).click();
   await page.locator('button').filter({ hasText: /^Contém dados$/ }).click();
   await page.getByLabel('Aplicar os filtros avançados atuais').click();
 
@@ -49,7 +51,7 @@ test('Cotação do CRM Perdida', async ({ page }) => {
   await page.getByLabel('Filter by value').fill('Aguardando Analise');
   await page.getByRole('button', { name: 'Aplicar' }).click();
 
-  // Seleciona a cotação que estiver na linha 9 e clica em editar
+  // Seleciona a cotação que estiver na linha 10 e clica em editar
   await page.getByRole('gridcell', { name: 'Selecionar linha 10' }).click();
   await page.getByLabel('Editar', { exact: true }).click();
 

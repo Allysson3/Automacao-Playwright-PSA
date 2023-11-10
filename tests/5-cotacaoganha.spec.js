@@ -27,7 +27,6 @@ test('Cotacao Ganha', async ({ page }) => {
   
   // Filtra as cotações pelo nome "Automacao"
   await page.getByText('Nome').click();
-  await page.getByText('Nome').click();
   await page.getByLabel('Filtrar por', { exact: true }).click();
   await page.getByLabel('Filter by value').click();
   await page.getByLabel('Filter by value').fill('Automacao');
@@ -45,12 +44,14 @@ test('Cotacao Ganha', async ({ page }) => {
   await page.getByRole('gridcell', { name: 'Selecionar linha 2' }).click();
   await page.getByLabel('Editar', { exact: true }).click();
   await page.waitForTimeout(3000);
-  await page.getByLabel('Fechar como Ganha').click();
+  //await expect(page.getByLabel('Fechar como Ganha')).toBeVisible({timeout: 10000});
+  await page.getByLabel('Fechar como Ganha', {exact: true}).click();
   await page.getByLabel('OK', { exact: true}).click();
 
   // Scroll
   await page.waitForTimeout(20000);
-  await page.mouse.wheel(0, 800);
+  await page.getByLabel('Número da Proposta CRM', { exact: true }).click();
+  await page.mouse.wheel(0, 1200);
 
   // Preenche o restante dos campos, confirma o contrato e salva novamente
   await page.getByLabel('Modalidade de Projeto').selectOption('0');

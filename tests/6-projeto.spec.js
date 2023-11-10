@@ -45,6 +45,7 @@ test('Criar Projeto', async ({ page }) => {
   await page.getByLabel('Filter by value').fill('Automacao');
   await page.getByRole('button', { name: 'Aplicar' }).click();
 
+  // Filtra os contratos ativos
   await page.getByText('Razão do Status do Contrato').nth(1).click();
   await page.getByLabel('Filtrar por', { exact: true }).click();
   await page.getByText('Igual a').click();
@@ -82,6 +83,7 @@ test('Criar Projeto', async ({ page }) => {
   // Entra novamente no projeto criado preenche os campos obrigatórios que faltam e salva
   await expect(page.getByLabel('Linhas de Contrato do Projeto')).toBeVisible({timeout: 180000});
   await page.getByText('Projetos', { exact: true }).click();
+  await expect(page.getByTitle('Data de Emissão do Projeto').nth(1)).toBeVisible();
   await page.getByTitle('Data de Emissão do Projeto').nth(1).click();
   await page.getByLabel('Classificar do Mais Recente para o Mais Antigo').click();
   await page.getByLabel('Atualizar').click();
